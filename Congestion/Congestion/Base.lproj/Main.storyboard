@@ -34,7 +34,7 @@
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="particleScene" destination="5y4-IP-o2f" id="lCA-ce-kVU"/>
+                        <outlet property="particleSceneView" destination="5y4-IP-o2f" id="Yd7-x1-Le3"/>
                         <outlet property="statusLabel" destination="JbZ-gK-gfp" id="Ipl-bS-SOy"/>
                     </connections>
                 </viewController>
