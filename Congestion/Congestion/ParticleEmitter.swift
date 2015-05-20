@@ -20,7 +20,7 @@ class ParticleEmitter: NSObject, MCNearbyServiceAdvertiserDelegate, MCNearbyServ
     static let ParticleEmitterInfoNotification = "ParticleEmitterInfoNotification"
     static let ParticleEmitterNotificationMessageKey = "ParticleEmitterNotificationMessageKey"
     
-    static let CongestionServiceType = "Congestion"
+    static let CongestionServiceType = "congestion"
     
     let particleRepository: ParticleRepository
     let delegate: ParticleEmitterDelegate
@@ -29,20 +29,43 @@ class ParticleEmitter: NSObject, MCNearbyServiceAdvertiserDelegate, MCNearbyServ
     let serviceAdvertiser: MCNearbyServiceAdvertiser
     let serviceBrowser: MCNearbyServiceBrowser
     
+    var session: MCSession
+    
+    // joerg:   C7470831-0122-4B9D-AD31-B6362CBBB49F
+    // ratkins: D890E9D6-BDE6-4496-A6F8-F7D81B62CB79
     init(particleRepository: ParticleRepository, delegate: ParticleEmitterDelegate) {
         self.particleRepository = particleRepository
-        localPeerId = MCPeerID(displayName: UIDevice.currentDevice().name) // should we use the UUID for this?
+        localPeerId = MCPeerID(displayName: UIDevice.currentDevice().identifierForVendor.UUIDString)
+        self.session = MCSession(peer: localPeerId, securityIdentity: nil, encryptionPreference: .None)
+        
         serviceAdvertiser = MCNearbyServiceAdvertiser(peer: localPeerId, discoveryInfo: nil, serviceType: ParticleEmitter.CongestionServiceType)
         serviceBrowser = MCNearbyServiceBrowser(peer: localPeerId, serviceType: ParticleEmitter.CongestionServiceType)
-        serviceBrowser.startBrowsingForPeers()
-        
         self.delegate = delegate
         
         super.init()
+
+        self.session.delegate = self
+        if UIDevice.currentDevice().identifierForVendor.UUIDString == "C7470831-0122-4B9D-AD31-B6362CBBB49F" {
+            // Joerg advertises
+            serviceAdvertiser.delegate = self
+            serviceAdvertiser.startAdvertisingPeer()
+        } else {
+            // Robert browses
+            serviceBrowser.delegate = self
+            serviceBrowser.startBrowsingForPeers()
+        }
+    }
+    
+    func upload(session: MCSession!, peerID: MCPeerID) {
+        let propertyListSerialisationError = NSErrorPointer()
+        let data = NSPropertyListSerialization.dataWithPropertyList(particleRepository.particleSets, format: NSPropertyListFormat.BinaryFormat_v1_0, options: 0, error: propertyListSerialisationError)
         
-        serviceAdvertiser.delegate = self
-        serviceBrowser.delegate = self
-        serviceAdvertiser.startAdvertisingPeer()
+        let sendDataError = NSErrorPointer()
+        let success = session.sendData(data, toPeers: [peerID], withMode: MCSessionSendDataMode.Reliable, error: sendDataError)
+        if !success {
+            NSNotificationCenter.defaultCenter().postNotificationName(ParticleEmitter.ParticleEmitterErrorNotification,
+                object: [ParticleEmitter.ParticleEmitterNotificationMessageKey: "Sending data failed"])
+        }
     }
     
     
@@ -59,20 +82,11 @@ class ParticleEmitter: NSObject, MCNearbyServiceAdvertiserDelegate, MCNearbyServ
         println("\(__FUNCTION__)")
         NSNotificationCenter.defaultCenter().postNotificationName(ParticleEmitter.ParticleEmitterInfoNotification,
             object: [ParticleEmitter.ParticleEmitterNotificationMessageKey: "Found peer, sending..."])
-        let session = MCSession(peer: localPeerId, securityIdentity: nil, encryptionPreference: MCEncryptionPreference.None)
-        
-        let propertyListSerialisationError = NSErrorPointer()
-        let data = NSPropertyListSerialization.dataWithPropertyList(particleRepository.particleSets, format: NSPropertyListFormat.BinaryFormat_v1_0, options: 0, error: propertyListSerialisationError)
-        
-        let sendDataError = NSErrorPointer()
-        let success = session.sendData(data, toPeers: [peerID], withMode: MCSessionSendDataMode.Reliable, error: sendDataError)
-        if !success {
-            NSNotificationCenter.defaultCenter().postNotificationName(ParticleEmitter.ParticleEmitterErrorNotification,
-                object: [ParticleEmitter.ParticleEmitterNotificationMessageKey: "Sending data failed"])
-        }
+
+        invitationHandler(true, session)
     }
     
-    
+
     // MARK: - Browser delegate
     
     func browser(browser: MCNearbyServiceBrowser!, didNotStartBrowsingForPeers error: NSError!) {
@@ -86,8 +100,12 @@ class ParticleEmitter: NSObject, MCNearbyServiceAdvertiserDelegate, MCNearbyServ
         println("\(__FUNCTION__)")
         NSNotificationCenter.defaultCenter().postNotificationName(ParticleEmitter.ParticleEmitterInfoNotification,
             object: [ParticleEmitter.ParticleEmitterNotificationMessageKey: "Found peer, receiving..."])
-        let session = MCSession(peer: peerID, securityIdentity: nil, encryptionPreference: MCEncryptionPreference.None)
-        session.delegate = self
+
+        session.nearbyConnectionDataForPeer(peerID) { data, error in
+            if data != nil {
+                self.session.connectPeer(peerID, withNearbyConnectionData: data)
+            }
+        }
     }
     
     func browser(browser: MCNearbyServiceBrowser!, lostPeer peerID: MCPeerID!) {
@@ -95,6 +113,9 @@ class ParticleEmitter: NSObject, MCNearbyServiceAdvertiserDelegate, MCNearbyServ
         NSNotificationCenter.defaultCenter().postNotificationName(ParticleEmitter.ParticleEmitterErrorNotification,
             object: [ParticleEmitter.ParticleEmitterNotificationMessageKey: "Lost peer"])
     }
+    
+    
+    // MARK: - Session delegate
     
     func session(session: MCSession!, didReceiveData data: NSData!, fromPeer peerID: MCPeerID!) {
         println("\(__FUNCTION__)")
@@ -120,7 +141,23 @@ class ParticleEmitter: NSObject, MCNearbyServiceAdvertiserDelegate, MCNearbyServ
     }
     
     func session(session: MCSession!, peer peerID: MCPeerID!, didChangeState state: MCSessionState) {
+        let str: String
+        
+        switch state {
+        case .NotConnected:
+            str = "NotConnected"
+        case .Connecting:
+            str = "Connecting"
+        case .Connected:
+            str = "Connected"
+            upload(session, peerID: peerID)
+        }
+        println("\(__FUNCTION__) \(peerID.description) did change state to \(str)")
+    }
+    
+    func session(session: MCSession!, didReceiveCertificate certificate: [AnyObject]!, fromPeer peerID: MCPeerID!, certificateHandler: ((Bool) -> Void)!) {
         println("\(__FUNCTION__)")
+        certificateHandler(true)
     }
     
 }

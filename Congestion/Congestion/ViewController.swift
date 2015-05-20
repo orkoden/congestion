@@ -21,6 +21,7 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
+        println("Starting with \(UIDevice.currentDevice().identifierForVendor.UUIDString)...")
         
         // Set up our service classes
         particleDetector = ParticleDetector(delegate: particleRepository)
