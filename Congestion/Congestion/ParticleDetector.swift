@@ -18,7 +18,8 @@ protocol ParticleDetectorDelegate {
 @objc class ParticleDetector : NSObject, CBCentralManagerDelegate {
     var btCentralmanager: CBCentralManager!
     var delegate: ParticleDetectorDelegate!
-    
+    var collectedParticles = Set<BlueParticle>()
+
     init (delegate: ParticleDetectorDelegate){
         super.init()
 
@@ -26,9 +27,21 @@ protocol ParticleDetectorDelegate {
         self.btCentralmanager = CBCentralManager(delegate: self, queue: queue)
 
         self.delegate = delegate
+        
+        self.btCentralmanager.scanForPeripheralsWithServices([CBUUID(string: "0x180A")], options: nil)
     }
     
     func centralManagerDidUpdateState(central: CBCentralManager!){
     
+    }
+    
+    func centralManager(central: CBCentralManager!,
+        didDiscoverPeripheral peripheral: CBPeripheral!,
+        advertisementData advertisementData: [NSObject : AnyObject]!,
+        RSSI RSSI: NSNumber!){
+            
+            
+            let discoveredParticle = BlueParticle(uuid: peripheral.identifier, rssi: RSSI)
+            self.collectedParticles.insert(discoveredParticle)
     }
 }
