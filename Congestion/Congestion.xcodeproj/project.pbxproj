@@ -19,6 +19,7 @@
 		46304B901B0C946A0010970D /* NucleusView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46304B8F1B0C946A0010970D /* NucleusView.swift */; };
 		465945311B0C99B300FC53AF /* ParticleEmitter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 465945301B0C99B300FC53AF /* ParticleEmitter.swift */; };
 		B365A4771B0C8B93005EA4A5 /* ParticleDetector.swift in Sources */ = {isa = PBXBuildFile; fileRef = B365A4761B0C8B93005EA4A5 /* ParticleDetector.swift */; };
+		B365A47B1B0CEC50005EA4A5 /* ParticleGraphicNodeCreator.swift in Sources */ = {isa = PBXBuildFile; fileRef = B365A47A1B0CEC50005EA4A5 /* ParticleGraphicNodeCreator.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -48,6 +49,7 @@
 		46304B8F1B0C946A0010970D /* NucleusView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NucleusView.swift; sourceTree = "<group>"; };
 		465945301B0C99B300FC53AF /* ParticleEmitter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParticleEmitter.swift; sourceTree = "<group>"; };
 		B365A4761B0C8B93005EA4A5 /* ParticleDetector.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParticleDetector.swift; sourceTree = "<group>"; };
+		B365A47A1B0CEC50005EA4A5 /* ParticleGraphicNodeCreator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParticleGraphicNodeCreator.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -92,6 +94,7 @@
 				B365A4751B0C8B3C005EA4A5 /* Discovery */,
 				46304B691B0C85890010970D /* AppDelegate.swift */,
 				46304B6B1B0C85890010970D /* ViewController.swift */,
+				B365A47A1B0CEC50005EA4A5 /* ParticleGraphicNodeCreator.swift */,
 				46304B6D1B0C85890010970D /* Main.storyboard */,
 				46304B701B0C85890010970D /* Images.xcassets */,
 				46304B721B0C85890010970D /* LaunchScreen.xib */,
@@ -244,6 +247,7 @@
 				46304B8C1B0C89520010970D /* Particle.swift in Sources */,
 				46304B8E1B0C8BEA0010970D /* ParticleRepository.swift in Sources */,
 				46304B6A1B0C85890010970D /* AppDelegate.swift in Sources */,
+				B365A47B1B0CEC50005EA4A5 /* ParticleGraphicNodeCreator.swift in Sources */,
 				46304B901B0C946A0010970D /* NucleusView.swift in Sources */,
 				465945311B0C99B300FC53AF /* ParticleEmitter.swift in Sources */,
 				46304B8A1B0C88F20010970D /* ParticleSet.swift in Sources */,
