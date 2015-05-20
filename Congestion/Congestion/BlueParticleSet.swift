@@ -10,5 +10,6 @@ import Foundation
 
 struct BlueParticleSet {
     let timestamp: NSDate
+    let nucleus: NSUUID
     let particles: Set<BlueParticle>
 }
