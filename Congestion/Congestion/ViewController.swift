@@ -24,8 +24,14 @@ class ViewController: UIViewController {
             self.updateDisplay()
         }
         
-        NSNotificationCenter.defaultCenter().addObserverForName(ParticleEmitter.ParticleEmitterAdvertisingFailedNotification, object: nil, queue: NSOperationQueue.mainQueue()) { notification in
-            self.statusLabel.text = "Advertising failed, retrying..."
+        NSNotificationCenter.defaultCenter().addObserverForName(ParticleEmitter.ParticleEmitterErrorNotification, object: nil, queue: NSOperationQueue.mainQueue()) { notification in
+            
+            if let userInfo = notification.userInfo, message = userInfo[ParticleEmitter.ParticleEmitterNotificationMessageKey] as? String {
+                self.statusLabel.text = message
+            } else {
+                self.statusLabel.text = ""
+            }
+        
             self.statusLabel.textColor = UIColor.redColor()
             self.statusLabel.alpha = 1.0
             UIView.animateWithDuration(1.0) {
