@@ -1,5 +1,5 @@
 //
-//  BlueParticle.swift
+//  Particle.swift
 //  Congestion
 //
 //  Created by Robert Atkins on 20/05/2015.
@@ -8,9 +8,15 @@
 
 import Foundation
 
-struct BlueParticle: Hashable, Equatable {
+class Particle: Hashable, Equatable {
+
     let uuid: NSUUID
     let rssi: NSNumber
+    
+    init(uuid: NSUUID, rssi: NSNumber) {
+        self.uuid = uuid
+        self.rssi = rssi
+    }
     
     var hashValue: Int {
         return uuid.hashValue
@@ -18,6 +24,6 @@ struct BlueParticle: Hashable, Equatable {
     
 }
 
-func ==(lhs: BlueParticle, rhs: BlueParticle) -> Bool {
+func ==(lhs: Particle, rhs: Particle) -> Bool {
     return lhs.uuid == rhs.uuid
 }

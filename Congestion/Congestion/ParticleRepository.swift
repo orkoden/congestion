@@ -12,13 +12,13 @@ class ParticleRepository: ParticleDetectorDelegate {
     
     static let ParticleSetAddedNotification = "ParticleSetAddedNotification"
     
-    private(set) var particleSets: [BlueParticleSet] = [] {
+    private(set) var particleSets: [ParticleSet] = [] {
         didSet {
             NSNotificationCenter.defaultCenter().postNotificationName(ParticleRepository.ParticleSetAddedNotification, object: self)
         }
     }
     
-    func particleDetector(particleDetector: ParticleDetector, didDetectParticleSet particleSet: BlueParticleSet) {
+    func particleDetector(particleDetector: ParticleDetector, didDetectParticleSet particleSet: ParticleSet) {
         particleSets.append(particleSet)
     }
     

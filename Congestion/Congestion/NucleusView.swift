@@ -10,7 +10,7 @@ import UIKit
 
 class ParticleSetView: UIView {
 
-    var particleSet: BlueParticleSet!
+    var particleSet: ParticleSet!
     
     override init(frame: CGRect) {
         super.init(frame: frame)

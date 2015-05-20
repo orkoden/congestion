@@ -12,14 +12,14 @@ import UIKit
 
 protocol ParticleDetectorDelegate {
  
-    func particleDetector (particleDetector: ParticleDetector, didDetectParticleSet particleSet : BlueParticleSet)
+    func particleDetector (particleDetector: ParticleDetector, didDetectParticleSet particleSet : ParticleSet)
 }
 
 
 @objc class ParticleDetector : NSObject, CBCentralManagerDelegate {
     var btCentralmanager: CBCentralManager!
     var delegate: ParticleDetectorDelegate!
-    var collectedParticles = Set<BlueParticle>()
+    var collectedParticles = Set<Particle>()
     var dumpingTimer: NSTimer!
 
     init (delegate: ParticleDetectorDelegate){
@@ -39,18 +39,16 @@ protocol ParticleDetectorDelegate {
     
     func centralManager(central: CBCentralManager!,
         didDiscoverPeripheral peripheral: CBPeripheral!,
-        advertisementData advertisementData: [NSObject : AnyObject]!,
-        RSSI RSSI: NSNumber!){
-            
-            
-            let discoveredParticle = BlueParticle(uuid: peripheral.identifier, rssi: RSSI)
+        advertisementData: [NSObject : AnyObject]!,
+        RSSI: NSNumber!){
+            let discoveredParticle = Particle(uuid: peripheral.identifier, rssi: RSSI)
             self.collectedParticles.insert(discoveredParticle)
     }
     
     func dumpParticlesToDelegate () {
         let deviceid = UIDevice.currentDevice().identifierForVendor
-        let setToDump = BlueParticleSet(timestamp: NSDate(), nucleus: deviceid, particles: self.collectedParticles)
-        self.collectedParticles = Set<BlueParticle>()
+        let setToDump = ParticleSet(timestamp: NSDate(), nucleus: deviceid, particles: self.collectedParticles)
+        self.collectedParticles = Set<Particle>()
         
         self.delegate.particleDetector(self, didDetectParticleSet: setToDump)
     }

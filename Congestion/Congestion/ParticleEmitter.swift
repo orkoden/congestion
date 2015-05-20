@@ -11,16 +11,21 @@ import MultipeerConnectivity
 class ParticleEmitter: NSObject, MCNearbyServiceAdvertiserDelegate {
     
     static let ParticleEmitterAdvertisingFailedNotification = "ParticleEmitterAdvertisingFailedNotification"
+    static let ParticleEmitterSendingFailedNotification = "ParticleEmitterSendingFailedNotification"
     static let ParticleEmitterPeerConnectedNotification = "ParticleEmitterPeerConnectedNotification"
     
     static let CongestionServiceType = "Congestion"
+    
+    let particleRepository: ParticleRepository
  
     let localPeerId: MCPeerID
     let serviceAdvertiser: MCNearbyServiceAdvertiser
     
-    override init() {
+    init(particleRepository: ParticleRepository) {
+        self.particleRepository = particleRepository
         localPeerId = MCPeerID(displayName: UIDevice.currentDevice().name) // should we use the UUID for this?
         serviceAdvertiser = MCNearbyServiceAdvertiser(peer: localPeerId, discoveryInfo: nil, serviceType: ParticleEmitter.CongestionServiceType)
+        
         super.init()
         
         serviceAdvertiser.delegate = self
@@ -35,10 +40,15 @@ class ParticleEmitter: NSObject, MCNearbyServiceAdvertiserDelegate {
     func advertiser(advertiser: MCNearbyServiceAdvertiser!, didReceiveInvitationFromPeer peerID: MCPeerID!, withContext context: NSData!, invitationHandler: ((Bool, MCSession!) -> Void)!) {
         NSNotificationCenter.defaultCenter().postNotificationName(ParticleEmitter.ParticleEmitterPeerConnectedNotification, object: nil)
         let session = MCSession(peer: localPeerId, securityIdentity: nil, encryptionPreference: MCEncryptionPreference.None)
-        let data = "".dataUsingEncoding(NSUTF8StringEncoding, allowLossyConversion: true)
         
-        let error = NSErrorPointer()
-        session.sendData(data, toPeers: [peerID], withMode: MCSessionSendDataMode.Reliable, error: error)
+        let propertyListSerialisationError = NSErrorPointer()
+        let data = NSPropertyListSerialization.dataWithPropertyList(particleRepository.particleSets, format: NSPropertyListFormat.BinaryFormat_v1_0, options: 0, error: propertyListSerialisationError)
+        
+        let sendDataError = NSErrorPointer()
+        let success = session.sendData(data, toPeers: [peerID], withMode: MCSessionSendDataMode.Reliable, error: sendDataError)
+        if !success {
+            NSNotificationCenter.defaultCenter().postNotificationName(ParticleEmitter.ParticleEmitterSendingFailedNotification, object: nil)
+        }
     }
     
 }
