@@ -15,9 +15,10 @@
 		46304B801B0C85890010970D /* CongestionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46304B7F1B0C85890010970D /* CongestionTests.swift */; };
 		46304B8A1B0C88F20010970D /* BlueParticleSet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46304B891B0C88F20010970D /* BlueParticleSet.swift */; };
 		46304B8C1B0C89520010970D /* BlueParticle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46304B8B1B0C89520010970D /* BlueParticle.swift */; };
-		B365A4771B0C8B93005EA4A5 /* ParticleDetector.swift in Sources */ = {isa = PBXBuildFile; fileRef = B365A4761B0C8B93005EA4A5 /* ParticleDetector.swift */; };
 		46304B8E1B0C8BEA0010970D /* ParticleRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46304B8D1B0C8BEA0010970D /* ParticleRepository.swift */; };
 		46304B901B0C946A0010970D /* NucleusView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46304B8F1B0C946A0010970D /* NucleusView.swift */; };
+		465945311B0C99B300FC53AF /* ParticleEmitter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 465945301B0C99B300FC53AF /* ParticleEmitter.swift */; };
+		B365A4771B0C8B93005EA4A5 /* ParticleDetector.swift in Sources */ = {isa = PBXBuildFile; fileRef = B365A4761B0C8B93005EA4A5 /* ParticleDetector.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -43,9 +44,10 @@
 		46304B7F1B0C85890010970D /* CongestionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CongestionTests.swift; sourceTree = "<group>"; };
 		46304B891B0C88F20010970D /* BlueParticleSet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BlueParticleSet.swift; sourceTree = "<group>"; };
 		46304B8B1B0C89520010970D /* BlueParticle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BlueParticle.swift; sourceTree = "<group>"; };
-		B365A4761B0C8B93005EA4A5 /* ParticleDetector.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParticleDetector.swift; sourceTree = "<group>"; };
 		46304B8D1B0C8BEA0010970D /* ParticleRepository.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParticleRepository.swift; sourceTree = "<group>"; };
 		46304B8F1B0C946A0010970D /* NucleusView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NucleusView.swift; sourceTree = "<group>"; };
+		465945301B0C99B300FC53AF /* ParticleEmitter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParticleEmitter.swift; sourceTree = "<group>"; };
+		B365A4761B0C8B93005EA4A5 /* ParticleDetector.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParticleDetector.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -98,6 +100,7 @@
 				46304B8B1B0C89520010970D /* BlueParticle.swift */,
 				46304B8D1B0C8BEA0010970D /* ParticleRepository.swift */,
 				46304B8F1B0C946A0010970D /* NucleusView.swift */,
+				465945301B0C99B300FC53AF /* ParticleEmitter.swift */,
 			);
 			path = Congestion;
 			sourceTree = "<group>";
@@ -241,6 +244,7 @@
 				46304B8E1B0C8BEA0010970D /* ParticleRepository.swift in Sources */,
 				46304B6A1B0C85890010970D /* AppDelegate.swift in Sources */,
 				46304B901B0C946A0010970D /* NucleusView.swift in Sources */,
+				465945311B0C99B300FC53AF /* ParticleEmitter.swift in Sources */,
 				46304B8A1B0C88F20010970D /* BlueParticleSet.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

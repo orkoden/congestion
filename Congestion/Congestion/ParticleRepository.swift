@@ -14,7 +14,7 @@ class ParticleRepository: ParticleDetectorDelegate {
     
     private(set) var particleSets: [BlueParticleSet] = [] {
         didSet {
-            NSNotificationCenter.defaultCenter().postNotificationName(ParticleSetAddedNotification, object: self)
+            NSNotificationCenter.defaultCenter().postNotificationName(ParticleRepository.ParticleSetAddedNotification, object: self)
         }
     }
     
