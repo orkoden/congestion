@@ -8,7 +8,7 @@
 
 import Foundation
 
-class ParticleRepository: ParticleDetectorDelegate {
+class ParticleRepository: ParticleDetectorDelegate, ParticleEmitterDelegate {
     
     static let ParticleSetAddedNotification = "ParticleSetAddedNotification"
     
@@ -22,4 +22,8 @@ class ParticleRepository: ParticleDetectorDelegate {
         particleSets.append(particleSet)
     }
     
+    func particleEmitter(particleEmitter: ParticleEmitter, didReceiveParticleSet particleSet: ParticleSet) {
+        particleSets.append(particleSet)
+    }
+
 }

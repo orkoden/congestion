@@ -11,12 +11,18 @@ import UIKit
 class ViewController: UIViewController {
     
     lazy var particleRepository: ParticleRepository = ParticleRepository()
+    lazy var particleDetector: ParticleDetector! = nil
+    lazy var particleEmitter: ParticleEmitter! = nil
 
     @IBOutlet weak var statusLabel: UILabel!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
+        
+        // Set up our service classes
+        particleDetector = ParticleDetector(delegate: particleRepository)
+        particleEmitter = ParticleEmitter(particleRepository: particleRepository, delegate: particleRepository)
         
         statusLabel.hidden = true
         

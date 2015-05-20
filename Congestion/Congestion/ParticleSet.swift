@@ -8,11 +8,15 @@
 
 import Foundation
 
-class ParticleSet {
+class ParticleSet: DebugPrintable {
     
     let timestamp: NSDate
     let nucleus: NSUUID
     let particles: Set<Particle>
+    
+    var debugDescription: String {
+        return "\(timestamp): \(nucleus.UUIDString) \(particles)"
+    }
     
     init(timestamp: NSDate, nucleus: NSUUID, particles: Set<Particle>) {
         self.timestamp = timestamp

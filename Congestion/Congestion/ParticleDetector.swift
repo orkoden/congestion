@@ -34,13 +34,29 @@ protocol ParticleDetectorDelegate {
     }
     
     func centralManagerDidUpdateState(central: CBCentralManager!){
-    
+        let state: String
+            switch central.state {
+            case .Unknown:
+                state = "Unknown"
+            case .Resetting:
+                state = "Resetting"
+            case .Unsupported:
+                state = "Unsupported"
+            case .Unauthorized:
+                state = "Unauthorized"
+            case .PoweredOff:
+                state = "PoweredOff"
+            case .PoweredOn:
+                state = "PoweredOn"
+            }
+        println("\(__FILE__), \(__FUNCTION__): \(state)")
     }
     
     func centralManager(central: CBCentralManager!,
         didDiscoverPeripheral peripheral: CBPeripheral!,
         advertisementData: [NSObject : AnyObject]!,
         RSSI: NSNumber!){
+            println("\(__FILE__), \(__FUNCTION__)")
             let discoveredParticle = Particle(uuid: peripheral.identifier, rssi: RSSI)
             self.collectedParticles.insert(discoveredParticle)
     }
@@ -50,6 +66,7 @@ protocol ParticleDetectorDelegate {
         let setToDump = ParticleSet(timestamp: NSDate(), nucleus: deviceid, particles: self.collectedParticles)
         self.collectedParticles = Set<Particle>()
         
+        println("\(__FILE__), \(__FUNCTION__): \(setToDump)")
         self.delegate.particleDetector(self, didDetectParticleSet: setToDump)
     }
 }

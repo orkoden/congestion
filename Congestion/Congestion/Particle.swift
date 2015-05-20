@@ -8,10 +8,14 @@
 
 import Foundation
 
-class Particle: Hashable, Equatable {
+class Particle: Hashable, Equatable, DebugPrintable {
 
     let uuid: NSUUID
     let rssi: NSNumber
+    
+    var debugDescription: String {
+        return "\(uuid): \(rssi)"
+    }
     
     init(uuid: NSUUID, rssi: NSNumber) {
         self.uuid = uuid
