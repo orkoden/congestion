@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SceneKit
 
 class ViewController: UIViewController {
     
@@ -15,6 +16,7 @@ class ViewController: UIViewController {
     lazy var particleEmitter: ParticleEmitter! = nil
 
     @IBOutlet weak var statusLabel: UILabel!
+    @IBOutlet weak var particleScene: SCNView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
