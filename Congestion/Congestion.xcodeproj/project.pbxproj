@@ -15,6 +15,7 @@
 		46304B801B0C85890010970D /* CongestionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46304B7F1B0C85890010970D /* CongestionTests.swift */; };
 		46304B8A1B0C88F20010970D /* BlueParticleSet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46304B891B0C88F20010970D /* BlueParticleSet.swift */; };
 		46304B8C1B0C89520010970D /* BlueParticle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46304B8B1B0C89520010970D /* BlueParticle.swift */; };
+		B365A4771B0C8B93005EA4A5 /* ParticleDetector.swift in Sources */ = {isa = PBXBuildFile; fileRef = B365A4761B0C8B93005EA4A5 /* ParticleDetector.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -40,6 +41,7 @@
 		46304B7F1B0C85890010970D /* CongestionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CongestionTests.swift; sourceTree = "<group>"; };
 		46304B891B0C88F20010970D /* BlueParticleSet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BlueParticleSet.swift; sourceTree = "<group>"; };
 		46304B8B1B0C89520010970D /* BlueParticle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BlueParticle.swift; sourceTree = "<group>"; };
+		B365A4761B0C8B93005EA4A5 /* ParticleDetector.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParticleDetector.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -81,6 +83,7 @@
 		46304B661B0C85890010970D /* Congestion */ = {
 			isa = PBXGroup;
 			children = (
+				B365A4751B0C8B3C005EA4A5 /* Discovery */,
 				46304B691B0C85890010970D /* AppDelegate.swift */,
 				46304B6B1B0C85890010970D /* ViewController.swift */,
 				46304B6D1B0C85890010970D /* Main.storyboard */,
@@ -116,6 +119,14 @@
 				46304B7E1B0C85890010970D /* Info.plist */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		B365A4751B0C8B3C005EA4A5 /* Discovery */ = {
+			isa = PBXGroup;
+			children = (
+				B365A4761B0C8B93005EA4A5 /* ParticleDetector.swift */,
+			);
+			name = Discovery;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -218,6 +229,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B365A4771B0C8B93005EA4A5 /* ParticleDetector.swift in Sources */,
 				46304B6C1B0C85890010970D /* ViewController.swift in Sources */,
 				46304B8C1B0C89520010970D /* BlueParticle.swift in Sources */,
 				46304B6A1B0C85890010970D /* AppDelegate.swift in Sources */,
@@ -417,6 +429,7 @@
 				46304B851B0C85890010970D /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		46304B861B0C85890010970D /* Build configuration list for PBXNativeTarget "CongestionTests" */ = {
 			isa = XCConfigurationList;
@@ -425,6 +438,7 @@
 				46304B881B0C85890010970D /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
