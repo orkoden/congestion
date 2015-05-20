@@ -30,7 +30,6 @@ protocol ParticleDetectorDelegate {
 
         let queue = dispatch_queue_create("congestion.particledetector", nil)
         self.btCentralmanager = CBCentralManager(delegate: self, queue: queue)
-        self.btCentralmanager.scanForPeripheralsWithServices([CBUUID(string: "0x180A")], options: nil)
     }
     
     func centralManagerDidUpdateState(central: CBCentralManager!){
@@ -47,16 +46,17 @@ protocol ParticleDetectorDelegate {
             case .PoweredOff:
                 state = "PoweredOff"
             case .PoweredOn:
+                self.btCentralmanager.scanForPeripheralsWithServices([CBUUID(string: "0x180A")], options: nil)
                 state = "PoweredOn"
             }
-        println("\(__FILE__), \(__FUNCTION__): \(state)")
+        println("\(__FUNCTION__): \(state)")
     }
     
     func centralManager(central: CBCentralManager!,
         didDiscoverPeripheral peripheral: CBPeripheral!,
         advertisementData: [NSObject : AnyObject]!,
         RSSI: NSNumber!){
-            println("\(__FILE__), \(__FUNCTION__)")
+            println("\(__FUNCTION__)")
             let discoveredParticle = Particle(uuid: peripheral.identifier, rssi: RSSI)
             self.collectedParticles.insert(discoveredParticle)
     }
@@ -66,7 +66,7 @@ protocol ParticleDetectorDelegate {
         let setToDump = ParticleSet(timestamp: NSDate(), nucleus: deviceid, particles: self.collectedParticles)
         self.collectedParticles = Set<Particle>()
         
-        println("\(__FILE__), \(__FUNCTION__): \(setToDump)")
+        println("\(__FUNCTION__): \(setToDump)")
         self.delegate.particleDetector(self, didDetectParticleSet: setToDump)
     }
 }

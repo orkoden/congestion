@@ -14,7 +14,7 @@ class Particle: Hashable, Equatable, DebugPrintable {
     let rssi: NSNumber
     
     var debugDescription: String {
-        return "\(uuid): \(rssi)"
+        return "\(uuid.UUIDString): \(rssi)"
     }
     
     init(uuid: NSUUID, rssi: NSNumber) {

@@ -49,14 +49,14 @@ class ParticleEmitter: NSObject, MCNearbyServiceAdvertiserDelegate, MCNearbyServ
     // MARK: - Advertiser delegate
 
     func advertiser(advertiser: MCNearbyServiceAdvertiser!, didNotStartAdvertisingPeer error: NSError!) {
-        println("\(__FILE__), \(__FUNCTION__)")
+        println("\(__FUNCTION__)")
         NSNotificationCenter.defaultCenter().postNotificationName(ParticleEmitter.ParticleEmitterErrorNotification,
             object: [ParticleEmitter.ParticleEmitterNotificationMessageKey: "Advertising failed, retrying..."])
         serviceAdvertiser.startAdvertisingPeer()
     }
     
     func advertiser(advertiser: MCNearbyServiceAdvertiser!, didReceiveInvitationFromPeer peerID: MCPeerID!, withContext context: NSData!, invitationHandler: ((Bool, MCSession!) -> Void)!) {
-        println("\(__FILE__), \(__FUNCTION__)")
+        println("\(__FUNCTION__)")
         NSNotificationCenter.defaultCenter().postNotificationName(ParticleEmitter.ParticleEmitterInfoNotification,
             object: [ParticleEmitter.ParticleEmitterNotificationMessageKey: "Found peer, sending..."])
         let session = MCSession(peer: localPeerId, securityIdentity: nil, encryptionPreference: MCEncryptionPreference.None)
@@ -76,14 +76,14 @@ class ParticleEmitter: NSObject, MCNearbyServiceAdvertiserDelegate, MCNearbyServ
     // MARK: - Browser delegate
     
     func browser(browser: MCNearbyServiceBrowser!, didNotStartBrowsingForPeers error: NSError!) {
-        println("\(__FILE__), \(__FUNCTION__)")
+        println("\(__FUNCTION__)")
         NSNotificationCenter.defaultCenter().postNotificationName(ParticleEmitter.ParticleEmitterErrorNotification,
             object: [ParticleEmitter.ParticleEmitterNotificationMessageKey: "Browsing failed, retrying..."])
         serviceBrowser.startBrowsingForPeers()
     }
     
     func browser(browser: MCNearbyServiceBrowser!, foundPeer peerID: MCPeerID!, withDiscoveryInfo info: [NSObject : AnyObject]!) {
-        println("\(__FILE__), \(__FUNCTION__)")
+        println("\(__FUNCTION__)")
         NSNotificationCenter.defaultCenter().postNotificationName(ParticleEmitter.ParticleEmitterInfoNotification,
             object: [ParticleEmitter.ParticleEmitterNotificationMessageKey: "Found peer, receiving..."])
         let session = MCSession(peer: peerID, securityIdentity: nil, encryptionPreference: MCEncryptionPreference.None)
@@ -91,13 +91,13 @@ class ParticleEmitter: NSObject, MCNearbyServiceAdvertiserDelegate, MCNearbyServ
     }
     
     func browser(browser: MCNearbyServiceBrowser!, lostPeer peerID: MCPeerID!) {
-        println("\(__FILE__), \(__FUNCTION__)")
+        println("\(__FUNCTION__)")
         NSNotificationCenter.defaultCenter().postNotificationName(ParticleEmitter.ParticleEmitterErrorNotification,
             object: [ParticleEmitter.ParticleEmitterNotificationMessageKey: "Lost peer"])
     }
     
     func session(session: MCSession!, didReceiveData data: NSData!, fromPeer peerID: MCPeerID!) {
-        println("\(__FILE__), \(__FUNCTION__)")
+        println("\(__FUNCTION__)")
         let readError = NSErrorPointer()
         let propertyList: AnyObject? = NSPropertyListSerialization.propertyListWithData(data, options: Int(NSPropertyListMutabilityOptions.Immutable.rawValue), format: nil, error: readError)
         if let particleSet = propertyList as? Array<ParticleSet> {
@@ -108,23 +108,19 @@ class ParticleEmitter: NSObject, MCNearbyServiceAdvertiserDelegate, MCNearbyServ
     }
     
     func session(session: MCSession!, didReceiveStream stream: NSInputStream!, withName streamName: String!, fromPeer peerID: MCPeerID!) {
-        println("\(__FILE__), \(__FUNCTION__)")
-        //...
+        println("\(__FUNCTION__)")
     }
     
     func session(session: MCSession!, didStartReceivingResourceWithName resourceName: String!, fromPeer peerID: MCPeerID!, withProgress progress: NSProgress!) {
-        println("\(__FILE__), \(__FUNCTION__)")
-        //...
+        println("\(__FUNCTION__)")
     }
     
     func session(session: MCSession!, didFinishReceivingResourceWithName resourceName: String!, fromPeer peerID: MCPeerID!, atURL localURL: NSURL!, withError error: NSError!) {
-        println("\(__FILE__), \(__FUNCTION__)")
-        //...
+        println("\(__FUNCTION__)")
     }
     
     func session(session: MCSession!, peer peerID: MCPeerID!, didChangeState state: MCSessionState) {
-        println("\(__FILE__), \(__FUNCTION__)")
-        //...
+        println("\(__FUNCTION__)")
     }
     
 }
