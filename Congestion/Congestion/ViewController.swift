@@ -12,13 +12,36 @@ class ViewController: UIViewController {
     
     lazy var particleRepository: ParticleRepository = ParticleRepository()
 
+    @IBOutlet weak var statusLabel: UILabel!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         
+        statusLabel.hidden = true
+        
         NSNotificationCenter.defaultCenter().addObserverForName(ParticleRepository.ParticleSetAddedNotification, object: nil, queue: NSOperationQueue.mainQueue()) { notification in
             self.updateDisplay()
         }
+        
+        NSNotificationCenter.defaultCenter().addObserverForName(ParticleEmitter.ParticleEmitterAdvertisingFailedNotification, object: nil, queue: NSOperationQueue.mainQueue()) { notification in
+            self.statusLabel.text = "Advertising failed, retrying..."
+            self.statusLabel.textColor = UIColor.redColor()
+            self.statusLabel.alpha = 1.0
+            UIView.animateWithDuration(1.0) {
+                self.statusLabel.alpha = 0.0
+            }
+        }
+        
+        NSNotificationCenter.defaultCenter().addObserverForName(ParticleEmitter.ParticleEmitterPeerConnectedNotification, object: nil, queue: NSOperationQueue.mainQueue()) { notification in
+            self.statusLabel.text = "Found peer, connecting..."
+            self.statusLabel.textColor = UIColor.blueColor()
+            self.statusLabel.alpha = 1.0
+            UIView.animateWithDuration(1.0) {
+                self.statusLabel.alpha = 0.0
+            }
+        }
+        
     }
 
     override func didReceiveMemoryWarning() {
@@ -28,5 +51,5 @@ class ViewController: UIViewController {
 
     func updateDisplay() {
     }
-
+    
 }
