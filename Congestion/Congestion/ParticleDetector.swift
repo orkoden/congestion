@@ -8,6 +8,7 @@
 
 import Foundation
 import CoreBluetooth
+import UIKit
 
 protocol ParticleDetectorDelegate {
  
@@ -47,7 +48,8 @@ protocol ParticleDetectorDelegate {
     }
     
     func dumpParticlesToDelegate () {
-        let setToDump = BlueParticleSet(timestamp: NSDate(), nucleus: NSUUID(), particles: self.collectedParticles)
+        let deviceid = UIDevice.currentDevice().identifierForVendor
+        let setToDump = BlueParticleSet(timestamp: NSDate(), nucleus: deviceid, particles: self.collectedParticles)
         self.collectedParticles = Set<BlueParticle>()
         
         self.delegate.particleDetector(self, didDetectParticleSet: setToDump)
