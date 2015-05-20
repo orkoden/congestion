@@ -63,10 +63,12 @@ protocol ParticleDetectorDelegate {
     
     func dumpParticlesToDelegate () {
         let deviceid = UIDevice.currentDevice().identifierForVendor
-        let setToDump = ParticleSet(timestamp: NSDate(), nucleus: deviceid, particles: self.collectedParticles)
-        self.collectedParticles = Set<Particle>()
-        
-        println("\(__FUNCTION__): \(setToDump)")
-        self.delegate.particleDetector(self, didDetectParticleSet: setToDump)
+        if (self.collectedParticles.count > 0){
+            let setToDump = ParticleSet(timestamp: NSDate(), nucleus: deviceid, particles: self.collectedParticles)
+            self.collectedParticles = Set<Particle>()
+            
+            println("\(__FUNCTION__): \(setToDump)")
+            self.delegate.particleDetector(self, didDetectParticleSet: setToDump)
+        }
     }
 }
