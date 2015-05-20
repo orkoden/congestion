@@ -38,9 +38,15 @@ class ViewController: UIViewController {
                 self.statusLabel.alpha = 0.0
             }
         }
-        
-        NSNotificationCenter.defaultCenter().addObserverForName(ParticleEmitter.ParticleEmitterPeerConnectedNotification, object: nil, queue: NSOperationQueue.mainQueue()) { notification in
-            self.statusLabel.text = "Found peer, connecting..."
+
+        NSNotificationCenter.defaultCenter().addObserverForName(ParticleEmitter.ParticleEmitterInfoNotification, object: nil, queue: NSOperationQueue.mainQueue()) { notification in
+            
+            if let userInfo = notification.userInfo, message = userInfo[ParticleEmitter.ParticleEmitterNotificationMessageKey] as? String {
+                self.statusLabel.text = message
+            } else {
+                self.statusLabel.text = ""
+            }
+            
             self.statusLabel.textColor = UIColor.blueColor()
             self.statusLabel.alpha = 1.0
             UIView.animateWithDuration(1.0) {
