@@ -15,6 +15,8 @@
 		46304B801B0C85890010970D /* CongestionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46304B7F1B0C85890010970D /* CongestionTests.swift */; };
 		46304B8A1B0C88F20010970D /* BlueParticleSet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46304B891B0C88F20010970D /* BlueParticleSet.swift */; };
 		46304B8C1B0C89520010970D /* BlueParticle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46304B8B1B0C89520010970D /* BlueParticle.swift */; };
+		46304B8E1B0C8BEA0010970D /* ParticleRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46304B8D1B0C8BEA0010970D /* ParticleRepository.swift */; };
+		46304B901B0C946A0010970D /* NucleusView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46304B8F1B0C946A0010970D /* NucleusView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -40,6 +42,8 @@
 		46304B7F1B0C85890010970D /* CongestionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CongestionTests.swift; sourceTree = "<group>"; };
 		46304B891B0C88F20010970D /* BlueParticleSet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BlueParticleSet.swift; sourceTree = "<group>"; };
 		46304B8B1B0C89520010970D /* BlueParticle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BlueParticle.swift; sourceTree = "<group>"; };
+		46304B8D1B0C8BEA0010970D /* ParticleRepository.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParticleRepository.swift; sourceTree = "<group>"; };
+		46304B8F1B0C946A0010970D /* NucleusView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NucleusView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -89,6 +93,8 @@
 				46304B671B0C85890010970D /* Supporting Files */,
 				46304B891B0C88F20010970D /* BlueParticleSet.swift */,
 				46304B8B1B0C89520010970D /* BlueParticle.swift */,
+				46304B8D1B0C8BEA0010970D /* ParticleRepository.swift */,
+				46304B8F1B0C946A0010970D /* NucleusView.swift */,
 			);
 			path = Congestion;
 			sourceTree = "<group>";
@@ -220,7 +226,9 @@
 			files = (
 				46304B6C1B0C85890010970D /* ViewController.swift in Sources */,
 				46304B8C1B0C89520010970D /* BlueParticle.swift in Sources */,
+				46304B8E1B0C8BEA0010970D /* ParticleRepository.swift in Sources */,
 				46304B6A1B0C85890010970D /* AppDelegate.swift in Sources */,
+				46304B901B0C946A0010970D /* NucleusView.swift in Sources */,
 				46304B8A1B0C88F20010970D /* BlueParticleSet.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
