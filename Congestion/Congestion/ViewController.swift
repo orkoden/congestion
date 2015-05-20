@@ -80,15 +80,13 @@ class ViewController: UIViewController {
     func sceneSetup() {
         // 1
         let scene = SCNScene()
-        var particles = Set<Particle>()
-        
+
+        var randomSets = Array<ParticleSet>()
         for i in 1...10 {
-        particles.insert(Particle(uuid: NSUUID(), rssi: NSNumber(unsignedInt: arc4random_uniform(200)) ))
+            let particleSet = randomParticleSet()
+            randomSets.append(particleSet)
         }
-        
-        let particleSet = ParticleSet(timestamp: NSDate(), nucleus: UIDevice.currentDevice().identifierForVendor, particles: particles)
-        
-        scene.rootNode.addChildNode( createParticlesceneNode (particleSet))
+        scene.rootNode.addChildNode(createPartcleSceneNodeFromSets(randomSets) )
 
         particleSceneView.autoenablesDefaultLighting = true
         particleSceneView.allowsCameraControl = true
@@ -97,7 +95,29 @@ class ViewController: UIViewController {
         particleSceneView.scene = scene
     }
 
-    func createParticlesceneNode (particleSet: ParticleSet) -> SCNNode {
+    func createPartcleSceneNodeFromSets (particleSets: Array<ParticleSet>) -> SCNNode {
+        
+        // randomly arrange different ParticleSets on a plane
+        let colorSections = 1 / Float(particleSets.count)
+        var rootNode = SCNNode()
+        for var i = 0 ; i < particleSets.count ; ++i {
+            let hue = CGFloat(colorSections) * CGFloat (i)
+            rootNode.addChildNode(createParticlesceneNode(particleSets[i], zplane: Float(i), hue: hue))
+        }
+        
+        return rootNode;
+    }
+    
+    func randomParticleSet() -> ParticleSet {
+        var particles = Set<Particle>()
+        
+        for i in 1...10 {
+            particles.insert(Particle(uuid: NSUUID(), rssi: NSNumber(unsignedInt: arc4random_uniform(200)) ))
+        }
+        return ParticleSet(timestamp: NSDate(), nucleus: UIDevice.currentDevice().identifierForVendor, particles: particles)
+    }
+    
+    func createParticlesceneNode (particleSet: ParticleSet, zplane: Float, hue: CGFloat) -> SCNNode {
 //      create center Node
         let spereGeometry = SCNSphere(radius: 0.2)
         spereGeometry.firstMaterial!.diffuse.contents = UIColor.blackColor()
@@ -114,7 +134,7 @@ class ViewController: UIViewController {
         
         for var i = 0 ; i < particleArray.count ; ++i {
             let particle = particleArray[i]
-            let node = createParticleNode( particle, rotationOffset: Double(i) * rotationOffset)
+            let node = createParticleNode( particle, rotationOffset: Double(i) * rotationOffset, zplane: zplane, hue: hue)
             childNodes.append(node)
         }
         
@@ -125,10 +145,11 @@ class ViewController: UIViewController {
         return sphereCenterNode
     }
     
-    func createParticleNode (particle: Particle, rotationOffset: Double) -> SCNNode {
+    func createParticleNode (particle: Particle, rotationOffset: Double, zplane: Float, hue: CGFloat) -> SCNNode {
         let spereGeometry = SCNSphere(radius: 0.2)
-        spereGeometry.firstMaterial!.diffuse.contents = UIColor.redColor()
-        spereGeometry.firstMaterial!.specular.contents = UIColor.orangeColor()
+        spereGeometry.firstMaterial!.diffuse.contents = UIColor(hue: hue, saturation: 1.0, brightness: 0.8, alpha: 1)
+        
+        spereGeometry.firstMaterial!.specular.contents = UIColor(hue: hue, saturation: 0.2, brightness: 1, alpha: 1)
         
         let normalizedSignal = particle.rssi.doubleValue / 200.0
         let maxRadius = 2.2
@@ -139,7 +160,7 @@ class ViewController: UIViewController {
         let y = cos(rotationOffset) * radius
         
         let sphereNode =  SCNNode(geometry: spereGeometry)
-        sphereNode.position = SCNVector3Make(Float(x), Float(y), 0.0)
+        sphereNode.position = SCNVector3Make(Float(x), Float(y), zplane / 3)
         
         return sphereNode
     }
